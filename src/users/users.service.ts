@@ -9,17 +9,17 @@ export class UsersService {
     @InjectRepository(User) private readonly repo: Repository<User>,
   ) {}
 
-  create(email: string, password: string) {
+  create(email: string, password: string): Promise<User> {
     const user = this.repo.create({ email, password });
     console.log(user);
     return this.repo.save(user);
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<User | null> {
     if (!id) {
       return null;
     }
-    return this.repo.findOne(id);
+    return this.repo.findOne(id) || null;
   }
 
   find(email: string) {
